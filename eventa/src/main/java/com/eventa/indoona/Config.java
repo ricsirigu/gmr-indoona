@@ -3,6 +3,7 @@ package com.eventa.indoona;
 import com.indoona.openplatform.sdk.provider.ProviderLocator;
 import com.indoona.openplatform.sdk.provider.impl.*;
 import com.indoona.openplatform.sdk.provider.exception.*;
+import com.indoona.openplatform.sdk.provider.*;
 
 import java.util.*;
 import java.lang.*;
@@ -11,21 +12,31 @@ import java.lang.*;
 
 public class Config  {
 
+//app settings
+public static String redirect= "https://eventa-indoona.appspot.com/redirect"; 
+public static String client_id = "**";
+public static String client_secret = "**";
+
+//room settings
+public static String roomNumber ="33"; 
+public static String roomName   ="Eventi attorno a te";
+public static String roomImg    ="https://lh3.googleusercontent.com/-lBS8dnXoAiM/AAAAAAAAAAI/AAAAAAAABfM/9wjarOVJMVE/s120-c/photo.jpg"; 
+public static String roomFirstMessage = "Ciao, sono Eventa e ti aiuterò a trovare i migliori eventi attorno a te. Digita la città :-)";
+public static String roomDesc = "Ciao, sono Eventa e ti aiuterò a trovare i migliori eventi attorno a te. Digita la città :-)";
+
+
 public static void  init() {	
+
 
 // initialize a configuration provider with your app’s data
 List<String> scope = new ArrayList();
 scope.add("basic");
 scope.add("user_phone");
 ConfigurationProvider confProvider = new ConfigurationProvider();
-confProvider.init("5631fe051d78197630f2a8aakUcFL", "XS1p1XjHPPO4CGDR", 
-	"https://corded-forge-111216.appspot.com/redirect", scope);
+confProvider.init(client_id, client_secret, 
+	redirect, scope);
 
-// construct the provider locator’s unique instance with the
-// obtained configuration provider
 
-// add signature providers according to what specified at App Registration, 
-// to trust the sender on incoming messages
 try {
 	ProviderLocator.buildInstance(confProvider);
 

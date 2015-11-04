@@ -29,11 +29,20 @@
             <version>${appengine.version}</version>
         </dependency>
           <dependency>
-            <groupId>com.indoona.openplatform.sdk</groupId>
-            <artifactId>javasdk</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/indoonaSDK.jar</systemPath>
+                <groupId>com.indoona.openplatform</groupId>
+                <artifactId>javasdk</artifactId>
+                <version>0.9.0</version>
+        </dependency>
+            <dependency>
+        <groupId>net.sf.json-lib</groupId>
+        <artifactId>json-lib</artifactId>
+        <version>2.3</version>
+        <classifier>jdk15</classifier>
+       </dependency>
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+             <version>4.0.1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -70,15 +79,15 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.1</version>
-                <executions>
-                    <execution>
+               <!--  <executions>
+                     <execution>
                         <phase>compile</phase>
                         <goals>
                             <goal>display-dependency-updates</goal>
                             <goal>display-plugin-updates</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

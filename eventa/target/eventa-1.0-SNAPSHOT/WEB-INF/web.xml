@@ -19,4 +19,7 @@
     <servlet-name>redirect</servlet-name>
     <url-pattern>/redirect</url-pattern>
   </servlet-mapping>
+   <listener>
+        <listener-class>com.eventa.indoona.BootContextListener</listener-class>
+    </listener>
 </web-app>
