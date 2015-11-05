@@ -1,6 +1,5 @@
 package com.gmr.indoona;
 
-import com.indoona.openplatform.sdk.provider.ProviderLocator;
 import com.indoona.openplatform.sdk.provider.impl.*;
 import com.indoona.openplatform.sdk.provider.exception.*;
 import com.indoona.openplatform.sdk.provider.*;

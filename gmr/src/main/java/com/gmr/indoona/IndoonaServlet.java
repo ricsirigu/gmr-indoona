@@ -3,24 +3,19 @@ package com.gmr.indoona;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
-import net.sf.json.*;
-
 
 import java.io.IOException;
 import java.util.Properties;
 
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 import com.indoona.openplatform.sdk.provider.ProviderLocator;
 import com.indoona.openplatform.sdk.provider.exception.*;
 import com.indoona.openplatform.sdk.model.AccessToken;
 import com.indoona.openplatform.sdk.model.message.*;
 import com.indoona.openplatform.sdk.model.UserAccessToken;
-import com.indoona.openplatform.sdk.model.message.*;
 
 import  com.gmr.indoona.model.User;
 
@@ -74,15 +69,17 @@ public class IndoonaServlet extends HttpServlet {
          try {
 
       //getting data parameter
-       String data = req.getParameter("data");
+      String data = req.getParameter("data");
 
-       //parsing just the sender and user txt
-      JSONObject jobj = JSONObject.fromObject(data);
-      String sender = jobj.getString("sender");
-      String userText = jobj.getJSONObject("data").getString("body");
+       //parsing just the sender and user txt 
+      //TODO check for message type
+      Message receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
+       
+      String sender = receivedMsg.getSender();
+      String userText = receivedMsg.getText();
+
       String[] parts = sender.split("@");
       sender = parts[0];
-
       
       //retrieving the user from persistence
       User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", sender).first().now();
