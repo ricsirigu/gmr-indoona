@@ -1,4 +1,4 @@
-package com.gmr.indoona;
+package com.gmr.indoona.config;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -20,13 +20,6 @@ public class BootContextListener implements ServletContextListener {
 
               ObjectifyService.register(User.class);
               lg.info("Objectify configured!");
-
-              
-
-
-
-
-
 
      }
 

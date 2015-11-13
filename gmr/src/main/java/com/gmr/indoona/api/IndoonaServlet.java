@@ -1,4 +1,4 @@
-package com.gmr.indoona;
+package com.gmr.indoona.api;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -18,46 +18,25 @@ import com.indoona.openplatform.sdk.model.message.*;
 import com.indoona.openplatform.sdk.model.UserAccessToken;
 
 import  com.gmr.indoona.model.User;
-
+import com.gmr.indoona.config.Config;
 
 
 public class IndoonaServlet extends HttpServlet {
+ 
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
 
     try {
 
-    //testing the rest service
-     resp.setContentType("text/plain");
-     resp.getWriter().println("testing rest: ok");
-
-
-
-      String sender = "prova";
-      //retrieving the user from persistence
-      User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", sender).first().now();
-
-      String userResponse = buildResponse("");
-
-
-      //sending message
-      String sentMsgStr = ProviderLocator.getInstance().getApiProvider().invokeTextMessageSendApi(
-      UserAccessToken.fromJson(usr.jsonUserAccessToken()),
-      Config.roomNumber,
-      usr.getUserId(),
-      userResponse,
-      false);
-      Message sentMsg = MessageFactory.getInstance().buildMessage(sentMsgStr);
-
-
-
+       //testing the rest service
+       resp.setContentType("text/plain");
+       resp.getWriter().println("testing rest: ok");
     } 
 
     catch (Exception e) {
       e.printStackTrace();
     }
-
 
   }
 
@@ -66,14 +45,15 @@ public class IndoonaServlet extends HttpServlet {
   @Override 
   public void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
-         try {
+    
+    try {
 
       //getting data parameter
       String data = req.getParameter("data");
 
        //parsing just the sender and user txt 
       //TODO check for message type
-      Message receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
+      TextMessage receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
        
       String sender = receivedMsg.getSender();
       String userText = receivedMsg.getText();
@@ -84,17 +64,13 @@ public class IndoonaServlet extends HttpServlet {
       //retrieving the user from persistence
       User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", sender).first().now();
 
-      String userResponse = buildResponse(userText);
-
+      //TODO Handling user not found
 
       //sending message
-      String sentMsgStr = ProviderLocator.getInstance().getApiProvider().invokeTextMessageSendApi(
-      UserAccessToken.fromJson(usr.jsonUserAccessToken()),
-      Config.roomNumber,
-      usr.getUserId(),
-      userResponse,
-      false);
-      Message sentMsg = MessageFactory.getInstance().buildMessage(sentMsgStr);
+      String userResponse = usr.buildResponse(userText);
+
+      //sending message
+       usr.sendMessage(userResponse);
  
     } 
 
@@ -105,12 +81,4 @@ public class IndoonaServlet extends HttpServlet {
     }
 
 
-
-    public String buildResponse(String usertext){
-      String response = "Hi my friend!";
-
-
-
-      return response;
-    }
 }

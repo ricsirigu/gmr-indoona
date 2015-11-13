@@ -11,7 +11,7 @@
     <properties>
         <app.id>gmr-indoona</app.id>
         <app.version>1</app.version>
-        <appengine.version>1.9.27</appengine.version>
+        <appengine.version>1.9.28</appengine.version>
         <gcloud.plugin.version>2.0.9.74.v20150814</gcloud.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
@@ -28,10 +28,26 @@
             <artifactId>appengine-api-1.0-sdk</artifactId>
             <version>${appengine.version}</version>
         </dependency>
-        <dependency>
+          <dependency>
                 <groupId>com.indoona.openplatform</groupId>
                 <artifactId>javasdk</artifactId>
                 <version>0.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.geocoder-java</groupId>
+            <artifactId>geocoder-java</artifactId>
+            <version>0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.3</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.objectify</groupId>
