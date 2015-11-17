@@ -165,7 +165,7 @@ public class User {
                     Config.roomName,
                     Config.roomImg,
                     caps);
-                UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
+            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
             ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
 
         }
@@ -233,6 +233,38 @@ public class User {
 
     }
 
+    public  void sendMessage (String message, String room) {
+
+
+        try{
+            UserAccessToken uat =  UserAccessToken.fromJson(this.getJsonUserAccessToken());
+               if(uat.isExpired()) {
+                   UserAccessToken newUat = ProviderLocator.getInstance()
+                            .getAuthorizationProvider()
+                            .refreshUserAccessToken(uat);
+
+                    User usr = ObjectifyService.ofy().load().type(User.class).filter("token", uat).first().now();
+                    usr.setJsonUserAccessToken(newUat.toJson());
+                    usr.setToken(newUat.getToken());
+                    ObjectifyService.ofy().save().entity(usr).now();
+
+            }
+
+            //send a welcome message to the user
+            String sentMsgStr = ProviderLocator.getInstance()
+                    .getApiProvider().invokeTextMessageSendApi(
+                            uat,
+                            room,
+                            this.getUserId(),
+                            message,
+                            false);
+            Message sentMsg = MessageFactory.getInstance().buildMessage(sentMsgStr);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public String buildResponse(String usertext){
         String response = "Hi my friend!";
@@ -261,7 +293,7 @@ public class User {
         }
         else if(lat=="null" && (getLat() == "0.0" || getLat() == null)) {
 
-            response = this.getName()+",non ho capito il luogo, potresti specificarlo?";
+            response = "Hey, non ho capito il luogo, potresti specificarlo?";
 
 
         } else if (lat=="null" && getLat() != "0.0" ){
@@ -274,7 +306,7 @@ public class User {
             else {
                    date =  fmt.print(DateTime.parse(date));
             }
-            response =  this.getName()+", "+ msg +" ---> " + GMR.getActivities(lat, lon, date);
+            response =  "Hey, "+ msg + " ---> " + GMR.getActivities(lat, lon, date);
 
         }
         else {
@@ -288,7 +320,7 @@ public class User {
             this.setLat(lat);
             this.setLon(lon);
             ObjectifyService.ofy().save().entity(this).now();
-            response = this.getName()+", "+ msg+ " ---> " + GMR.getActivities(lat, lon, date);
+            response = "Hey, "+ msg+ " ---> " + GMR.getActivities(lat, lon, date);
 
         }
 

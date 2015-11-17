@@ -21,10 +21,30 @@
 
   <h4 class="title text-center"> Seleziona il canale che vuoi seguire:</h4>
 
-  <tr >
+  <tr>
+    <td >GMR Buddy</td>
+    <td >
+    <button class="follow btn btn-default" data-contact-id="gmr-buddy" type="button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Segui</span>
+    </button>
+  </td>
+  </tr>
+
+  <tr>
     <td >News GMR</td>
     <td >
-    <button class="follow btn btn-default" type="button">
+    <button class="follow btn btn-default" data-contact-id="news" type="button">
+      <i class="glyphicon glyphicon-plus"></i>
+      <span>Segui</span>
+    </button>
+  </td>
+  </tr>
+
+  <tr>
+    <td >Eventi</td>
+    <td >
+    <button class="follow btn btn-default" data-contact-id="events" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -34,17 +54,17 @@
   <tr>
     <td >Community GMR</td>
     <td >
-    <button class="follow btn btn-default" type="button">
+    <button class="follow btn btn-default" data-contact-id="community" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
   </td>
   </tr>
 
-  <tr >
+  <tr>
     <td >Promozioni GMR</td>
     <td >
-    <button class="follow btn btn-default" type="button">
+    <button class="follow btn btn-default" data-contact-id="promo" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -52,7 +72,7 @@
   </tr>
 
 
-  <INPUT TYPE="HIDDEN" NAME="sender">
+  <INPUT TYPE="HIDDEN" NAME="sender" id="user-id" value=<%= request.getParameter("user") %>>
 
   </table>
 </form>
@@ -66,16 +86,33 @@
       $(".follow").click(function(){
       // Holds the product ID of the clicked element
      if($(this).hasClass("checked")){
-       $(this).removeClass("checked");
-       $($(this).children()[0]).removeClass("glyphicon-ok");
-       $($(this).children()[0]).addClass("glyphicon-plus");
-       $("span", this).text("Segui");
+        $.post( "https://gmr-indoona.appspot.com/indoona/management",
+        {
+          contactId: $(this).data("contact-id"),
+          userId: $("#user-id").val(),
+          action: "remove"
+        }, 
+        function( data ) {
+           $(this).removeClass("checked");
+           $($(this).children()[0]).removeClass("glyphicon-ok");
+           $($(this).children()[0]).addClass("glyphicon-plus");
+           $("span", this).text("Segui");
+        });
 
      }else {
-       $(this).addClass("checked");
-       $($(this).children()[0]).removeClass("glyphicon-plus");
-       $($(this).children()[0]).addClass("glyphicon-ok");
-       $("span", this).text("");
+
+       $.post( "https://gmr-indoona.appspot.com/indoona/management",
+        {
+          contactId: $(this).data("contact-id"),
+          userId: $("#user-id").val(),
+          action: "add"
+        }, 
+        function( data ) {
+           $(this).addClass("checked");
+           $($(this).children()[0]).removeClass("glyphicon-plus");
+           $($(this).children()[0]).addClass("glyphicon-ok");
+           $("span", this).text("");
+        });
      }
 
     });

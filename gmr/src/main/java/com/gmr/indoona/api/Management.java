@@ -15,10 +15,12 @@ package com.gmr.indoona.api;
  import javax.servlet.http.HttpServletRequest;
  import javax.servlet.http.HttpServletResponse;
  import java.io.IOException;
-
+import java.util.logging.Logger;
 
 public class Management extends HttpServlet {
     User usr = null;
+
+    private static final Logger log = Logger.getLogger(Management.class.getName());
 
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
@@ -56,8 +58,39 @@ public class Management extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-        System.out.println("**************");
-        resp.sendRedirect("/management.jsp?user="+usr.getUserId());
+
+        String contactId = req.getParameter("contactId");
+
+        String action = req.getParameter("action");
+
+        String userId = req.getParameter("userId");
+
+        log.info("User " + userId + " " + action + " " + contactId );
+
+        User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", userId).first().now();
+
+        usr.addChannel(contactId, contactId);
+
+        switch(contactId){
+            case "gmr-buddy": 
+                usr.sendMessage("GMR Buddy", contactId);   
+                break;            
+            case "news": 
+                usr.sendMessage("GMR News", contactId);   
+                break;            
+            case "events": 
+                usr.sendMessage("GMR Events", contactId);   
+                break;            
+            case "community": 
+                usr.sendMessage("GMR Community", contactId);   
+                break;            
+            case "promo": 
+                usr.sendMessage("GMR Promo", contactId);   
+                break;
+        }
+
+    
+        //resp.sendRedirect("/management.jsp?user="+usr.getUserId());
 
 
     }
