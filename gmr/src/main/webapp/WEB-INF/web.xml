@@ -11,6 +11,22 @@
     <servlet-name>redirect</servlet-name>
     <servlet-class>com.gmr.indoona.api.Redirect</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>connect</servlet-name>
+    <servlet-class>com.gmr.indoona.api.Connect</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>management</servlet-name>
+    <servlet-class>com.gmr.indoona.api.Management</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>connect</servlet-name>
+    <url-pattern>/indoona/connect</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>management</servlet-name>
+    <url-pattern>/indoona/management</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>indoona</servlet-name>
     <url-pattern>/indoona/endpoint</url-pattern>

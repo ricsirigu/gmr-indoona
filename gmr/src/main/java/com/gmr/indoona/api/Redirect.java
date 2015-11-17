@@ -42,7 +42,9 @@ public class Redirect extends HttpServlet {
         usr.addChannel();
 
         //send welcome message to User
-        usr.sendMessage(Config.roomFirstMessage);      
+        usr.sendMessage(Config.roomFirstMessage);   
+
+        response.sendRedirect("/management.jsp");
 
     }
 

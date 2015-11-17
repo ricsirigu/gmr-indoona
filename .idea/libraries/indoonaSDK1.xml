@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="indoonaSDK1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/eventa/src/main/webapp/WEB-INF/lib/indoonaSDK.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

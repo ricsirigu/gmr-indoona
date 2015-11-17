@@ -18,7 +18,7 @@ public class Semantic {
 
         try {
 
-            URL url = new URL("http://api.webofcode.org/wherenwhen?apikey=eventa.it_NkXQneY2azVPEdHK&lang=it&text=" + URLEncoder.encode(usertext, "UTF-8"));
+            URL url = new URL("http://api.webofcode.org/wherenwhen?apikey=guidemeright.it_nVL0rvKWHXgDpUu3&lang=it&text=" + URLEncoder.encode(usertext, "UTF-8"));
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
 

@@ -152,10 +152,10 @@ public class User {
     }
 
 
-    public   void addChannel () {
+    public void addChannel() {
 
         try{
-            //create a contact for the user
+           //create a contact for the user
             List<String> caps = new ArrayList();
             caps.add("group_add");
             caps.add("interactive");
@@ -165,7 +165,30 @@ public class User {
                     Config.roomName,
                     Config.roomImg,
                     caps);
-            
+                UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
+            ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void addChannel (String code, String name) {
+
+        try{
+            //create a contact for the user
+            List<String> caps = new ArrayList();
+            caps.add("group_add");
+            caps.add("interactive");
+
+            Contact gmrChannel = new Contact(
+                    code,
+                    name,
+                    Config.roomImg,
+                    caps);
             UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
             ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
 

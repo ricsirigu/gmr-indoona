@@ -24,7 +24,7 @@ public class GMR {
         Random randomGen  = new Random();
 
         try {
-            URL url = new URL(GmrURI + "*"+ lat + "&lon=" + lon + "*");
+            URL url = new URL(GmrURI + "api/geoActivities?lat="+ lat + "&lon=" + lon + "&exp=all&sty=all&lan=all&bad=all&key=android");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line;
 

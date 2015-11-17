@@ -1,0 +1,29 @@
+.checked{	
+    background: #33CC33 !important;
+}
+
+.title{
+	margin-bottom: 25px;
+}
+
+.logo{
+	width:40%;
+    margin-top: 15px; 
+}
+
+td {
+    text-align: center;
+    vertical-align: middle !important;   
+}
+
+.text-center {
+    text-align: center;
+}
+
+button.follow.btn.btn-default.checked {
+    background-color: #4CAF50;
+}
+
+.btn-default {
+    width: 80px;
+}
