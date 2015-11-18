@@ -199,39 +199,6 @@ public class User {
         return contacts;
     }  
 
-    public  void sendMessage(String message) {
-
-
-        try{
-            UserAccessToken uat =  UserAccessToken.fromJson(this.getJsonUserAccessToken());
-               if(uat.isExpired()) {
-                   UserAccessToken newUat = ProviderLocator.getInstance()
-                            .getAuthorizationProvider()
-                            .refreshUserAccessToken(uat);
-
-                    User usr = ObjectifyService.ofy().load().type(User.class).filter("token", uat).first().now();
-                    usr.setJsonUserAccessToken(newUat.toJson());
-                    usr.setToken(newUat.getToken());
-                    ObjectifyService.ofy().save().entity(usr).now();
-
-            }
-
-            //send a welcome message to the user
-            String sentMsgStr = ProviderLocator.getInstance()
-                    .getApiProvider().invokeTextMessageSendApi(
-                            uat,
-                            Config.roomNumber,
-                            this.getUserId(),
-                            message,
-                            false);
-            Message sentMsg = MessageFactory.getInstance().buildMessage(sentMsgStr);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public  void sendMessage (String message, String room) {
 
         try{

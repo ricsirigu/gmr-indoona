@@ -16,13 +16,16 @@ import com.indoona.openplatform.sdk.provider.exception.*;
 import com.indoona.openplatform.sdk.model.AccessToken;
 import com.indoona.openplatform.sdk.model.message.*;
 import com.indoona.openplatform.sdk.model.UserAccessToken;
-
+import static com.gmr.indoona.model.GMRContact.*;
 import  com.gmr.indoona.model.User;
 import com.gmr.indoona.config.Config;
+import java.util.logging.Logger;
 
 
 public class IndoonaServlet extends HttpServlet {
- 
+
+  private static final Logger log = Logger.getLogger(IndoonaServlet.class.getName());
+
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
@@ -53,6 +56,7 @@ public class IndoonaServlet extends HttpServlet {
 
        //parsing just the sender and user txt 
       //TODO check for message type
+      String roomId = MessageFactory.getInstance().buildMessage(data).getRecipient().split("@")[0];
       TextMessage receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
        
       String sender = receivedMsg.getSender();
@@ -68,9 +72,13 @@ public class IndoonaServlet extends HttpServlet {
 
       //sending message
       String userResponse = usr.buildResponse(userText);
+        
+      log.severe("Message " + receivedMsg.getText() + " room " + roomId );
 
       //sending message
-       usr.sendMessage(userResponse);
+      if(roomId.equals(GMRBuddy.CONTACT_NUMBER.toString())){
+         usr.sendMessage(userResponse, GMRBuddy.CONTACT_NUMBER.toString());
+      }
  
     } 
 
