@@ -12,9 +12,9 @@ import java.lang.*;
 public class Config  {
 
 	//app settings
-	public static String redirect= "https://gmr-indoona.appspot.com/indoona/redirect"; 
-	public static String client_id = "5645d0cd8464495b4001d2bcsj9Pb";
-	public static String client_secret = "ajVactu3D0NA3gO5QFhYC1iaqADKKsWUMR5Zkz3XAQyE6nJX31VG2eRtPueAXauJ";
+	public static String redirect= "*"; 
+	public static String client_id = "*";
+	public static String client_secret = "*";
 
 	//room settings
 	public static String roomNumber ="10"; 
