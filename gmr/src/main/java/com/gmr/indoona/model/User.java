@@ -152,8 +152,7 @@ public class User {
     }
 
 
-
-    public void addContact (String contactNumber, String contactName) {
+    public void addContact (String contactNumber, String contactName, String imageUrl) {
 
         try{
             //create a contact for the user
@@ -164,7 +163,7 @@ public class User {
             Contact gmrChannel = new Contact(
                     contactNumber,
                     contactName,
-                    Config.roomImg,
+                    imageUrl,
                     caps);
             UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
             ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
@@ -181,12 +180,24 @@ public class User {
 
             UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
             ProviderLocator.getInstance().getApiProvider().invokeContactRemoveApi(uat, contactNumber);
-
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
+
+    public String getAddedContacts(){
+    
+        String contacts = null;    
+         try{
+            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
+            contacts =  ProviderLocator.getInstance().getApiProvider().invokeContactListApi(uat);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return contacts;
+    }  
 
     public  void sendMessage(String message) {
 

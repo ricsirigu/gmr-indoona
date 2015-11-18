@@ -88,19 +88,21 @@
     $( document ).ready(function() {      
 
       $(".follow").click(function(){
+      
+      var $this = $(this);
       // Holds the product ID of the clicked element
-     if($(this).hasClass("checked")){
+     if($this.hasClass("checked")){
         $.post( "https://gmr-indoona.appspot.com/indoona/management",
         {
           contactId: $(this).data("contact-id"),
           userId: $("#user-id").val(),
           action: "remove"
-        }, 
-        function( data ) {
-           $(this).removeClass("checked");
-           $($(this).children()[0]).removeClass("glyphicon-ok");
-           $($(this).children()[0]).addClass("glyphicon-plus");
-           $("span", this).text("Segui");
+        })
+        .done(function(data, status) {
+           $this.removeClass("checked");
+           $($this.children()[0]).removeClass("glyphicon-ok");
+           $($this.children()[0]).addClass("glyphicon-plus");
+           $("span", $this).text("Segui");
         });
 
      }else {
@@ -110,12 +112,12 @@
           contactId: $(this).data("contact-id"),
           userId: $("#user-id").val(),
           action: "add"
-        }, 
-        function( data ) {
-           $(this).addClass("checked");
-           $($(this).children()[0]).removeClass("glyphicon-plus");
-           $($(this).children()[0]).addClass("glyphicon-ok");
-           $("span", this).text("");
+        })
+        .done(function(data, status) {
+           $this.addClass("checked");
+           $($this.children()[0]).removeClass("glyphicon-plus");
+           $($this.children()[0]).addClass("glyphicon-ok");
+           $("span", $this).text("");
         });
      }
 

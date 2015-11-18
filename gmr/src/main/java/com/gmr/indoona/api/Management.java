@@ -38,10 +38,14 @@ public class Management extends HttpServlet {
                     .invokeOtpVerifyApi(appToken, otp);
             String userId = JSONObject.fromObject(jsonResult).getString("user_id");
 
+            log.severe("Management user id is " + userId );
+
+
             usr = ObjectifyService.ofy().load().type(User.class).filter("userId", userId).first().now();
 
 
-            response.sendRedirect("/management.jsp?user="+usr.getUserId());
+
+            response.sendRedirect("/management.jsp?user="+"usr.getUserId()");
             // here you should check whether the obtained
             // user_id matches the one locally stored for
             // the currently logged user (if exists);
@@ -73,28 +77,29 @@ public class Management extends HttpServlet {
             case "add":
                 switch(contactId){
                     case "gmr-buddy": 
-                        usr.addContact(GMRBuddy.CONTACT_NUMBER.toString(), contactId);
-                        usr.sendMessage(GMRBuddy.CONTACT_NAME.toString(), GMRBuddy.CONTACT_NUMBER.toString());   
+                        usr.addContact(GMRBuddy.CONTACT_NUMBER.toString(), GMRBuddy.CONTACT_NAME.toString(), GMRBuddy.CONTACT_IMAGE_URL.toString());
+                        usr.sendMessage(GMRBuddy.CONTACT_WELCOME_MESSAGE.toString(), GMRBuddy.CONTACT_NUMBER.toString());   
                         break;            
                     case "news": 
-                        usr.addContact(GMRNews.CONTACT_NUMBER.toString(), contactId);
-                        usr.sendMessage(GMRNews.CONTACT_NAME.toString(), GMRNews.CONTACT_NUMBER.toString());   
+                        usr.addContact(GMRNews.CONTACT_NUMBER.toString(), GMRNews.CONTACT_NAME.toString(), GMRNews.CONTACT_IMAGE_URL.toString());
+                        usr.sendMessage(GMRNews.CONTACT_WELCOME_MESSAGE.toString(), GMRNews.CONTACT_NUMBER.toString());   
                         break;            
                     case "events": 
-                        usr.addContact(GMREvents.CONTACT_NUMBER.toString(), contactId);
-                        usr.sendMessage(GMREvents.CONTACT_NAME.toString(), GMREvents.CONTACT_NUMBER.toString());   
+                        usr.addContact(GMREvents.CONTACT_NUMBER.toString(), GMREvents.CONTACT_NAME.toString(), GMREvents.CONTACT_IMAGE_URL.toString());
+                        usr.sendMessage(GMREvents.CONTACT_WELCOME_MESSAGE.toString(), GMREvents.CONTACT_NUMBER.toString());   
                         break;            
                     case "community": 
-                        usr.addContact(GMRCommunity.CONTACT_NUMBER.toString(), contactId);
-                        usr.sendMessage(GMRCommunity.CONTACT_NAME.toString(), GMRCommunity.CONTACT_NUMBER.toString());   
+                        usr.addContact(GMRCommunity.CONTACT_NUMBER.toString(), GMRCommunity.CONTACT_NAME.toString(), GMRCommunity.CONTACT_IMAGE_URL.toString());
+                        usr.sendMessage(GMRCommunity.CONTACT_WELCOME_MESSAGE.toString(), GMRCommunity.CONTACT_NUMBER.toString());   
                         break;            
                     case "promo": 
-                        usr.addContact(GMRPromo.CONTACT_NUMBER.toString(), contactId);
-                        usr.sendMessage(GMRPromo.CONTACT_NAME.toString(), GMRPromo.CONTACT_NUMBER.toString());   
+                        usr.addContact(GMRPromo.CONTACT_NUMBER.toString(), GMRPromo.CONTACT_NAME.toString(), GMRPromo.CONTACT_IMAGE_URL.toString());
+                        usr.sendMessage(GMRPromo.CONTACT_WELCOME_MESSAGE.toString(), GMRPromo.CONTACT_NUMBER.toString());   
                         break;
                     }
                     break;
             case "remove":
+                log.severe(usr.getAddedContacts());
                 switch(contactId){
                     case "gmr-buddy": 
                         usr.removeContact(GMRBuddy.CONTACT_NUMBER.toString());

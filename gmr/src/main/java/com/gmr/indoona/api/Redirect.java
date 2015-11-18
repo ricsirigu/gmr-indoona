@@ -39,7 +39,7 @@ public class Redirect extends HttpServlet {
         User usr = User.createUser(code);
 
 
-        response.sendRedirect("/management.jsp");
+        response.sendRedirect("/management.jsp?user="+usr.getUserId());
 
     }
 
