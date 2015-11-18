@@ -7,7 +7,7 @@ import com.googlecode.objectify.ObjectifyService;
 
 import java.io.IOException;
 import java.util.Properties;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import java.util.*;
 
 
@@ -38,8 +38,10 @@ public class Redirect extends HttpServlet {
         // getting user info and storing
         User usr = User.createUser(code);
 
-
-        response.sendRedirect("/management.jsp?user="+usr.getUserId());
+        ServletContext sc = getServletContext();
+        RequestDispatcher rd = sc.getRequestDispatcher("/management.jsp");
+        request.setAttribute("user", usr);
+        rd.forward(request, response);
 
     }
 

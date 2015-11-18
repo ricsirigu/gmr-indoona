@@ -6,7 +6,7 @@ public class GMRContact {
 
 	public static enum GMRBuddy{
 		CONTACT_NUMBER("11"),
-		CONTACT_NAME("Gmr Buddy"),
+		CONTACT_NAME("GmrBuddy"),
 		CONTACT_IMAGE_URL(BASE_URL + "/img/gmr-buddy.png"),
 		CONTACT_WELCOME_MESSAGE("Ciao, sono GuideMeRight e ti aiuterò a trovare le migliori esperienze intorno a te. Digita la città :-)"),
 	    CONTACT_DESCRIPTION("Ciao, sono GuideMeRight e ti aiuterò a trovare le migliori esperienze intorno a te. Digita la città :-)");
@@ -25,7 +25,7 @@ public class GMRContact {
 
 	public static enum GMRNews{
 		CONTACT_NUMBER("12"),
-		CONTACT_NAME("Gmr News"),
+		CONTACT_NAME("GmrNews"),
 		CONTACT_IMAGE_URL(BASE_URL + "/img/gmr-news.png"),
 		CONTACT_WELCOME_MESSAGE("Ciao, sono GuideMeRight News e ti terrò aggiurnato sulle varie news! :-)"),
 	    CONTACT_DESCRIPTION("Ciao, sono GuideMeRight News e ti terrò aggiurnato sulle varie news! :-)");
@@ -44,7 +44,7 @@ public class GMRContact {
 
 	public static enum GMREvents{
 		CONTACT_NUMBER("13"),
-		CONTACT_NAME("Gmr Events"),
+		CONTACT_NAME("GmrEvents"),
 		CONTACT_IMAGE_URL(BASE_URL + "/img/gmr-events.png"),
 		CONTACT_WELCOME_MESSAGE("Ciao, sono GuideMeRight Eventi e ti terrò aggiornato sui vari eventi! :-)"),
 	    CONTACT_DESCRIPTION("Ciao, sono GuideMeRight Eventi e ti terrò aggiornato sui vari eventi :-)");
@@ -64,7 +64,7 @@ public class GMRContact {
 
 	public static enum GMRCommunity{
 		CONTACT_NUMBER("14"),
-		CONTACT_NAME("Gmr Community"),
+		CONTACT_NAME("GmrCommunity"),
 		CONTACT_IMAGE_URL(BASE_URL + "/img/gmr-community.png"),
 		CONTACT_WELCOME_MESSAGE("Ciao, sono GuideMeRight e ti aiuterò a restare in contatto con la nostra vibrante community! :-)"),
 	    CONTACT_DESCRIPTION("Ciao, sono GuideMeRight e ti aiuterò a restare in contatto con la nostra vibrante community! :-)");
@@ -83,7 +83,7 @@ public class GMRContact {
 
 	public static enum GMRPromo{
 		CONTACT_NUMBER("15"),
-		CONTACT_NAME("Gmr Promo"),
+		CONTACT_NAME("GmrPromo"),
 		CONTACT_IMAGE_URL(BASE_URL + "/img/gmr-promo.png"),
 		CONTACT_WELCOME_MESSAGE("Ciao, sono GuideMeRight e ti terrò aggiurnate sulle varie promozioni in corso! :-)"),
 	    CONTACT_DESCRIPTION("Ciao, sono GuideMeRight e ti terrò aggiurnate sulle varie promozioni in corso! :-)");

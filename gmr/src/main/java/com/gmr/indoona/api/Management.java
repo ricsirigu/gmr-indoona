@@ -9,7 +9,7 @@ import com.indoona.openplatform.sdk.model.AppAccessToken;
 import com.indoona.openplatform.sdk.utils.TextUtils.*;
 import net.sf.json.JSONObject;
 
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +44,10 @@ public class Management extends HttpServlet {
             usr = ObjectifyService.ofy().load().type(User.class).filter("userId", userId).first().now();
 
 
-
-            response.sendRedirect("/management.jsp?user="+"usr.getUserId()");
+            ServletContext sc = getServletContext();
+            RequestDispatcher rd = sc.getRequestDispatcher("/management.jsp");
+            request.setAttribute("user", usr);
+            rd.forward(request, response);
             // here you should check whether the obtained
             // user_id matches the one locally stored for
             // the currently logged user (if exists);
@@ -75,47 +77,43 @@ public class Management extends HttpServlet {
 
         switch(action){
             case "add":
-                switch(contactId){
-                    case "gmr-buddy": 
+                if(contactId.equals(GMRBuddy.CONTACT_NUMBER.toString())){
                         usr.addContact(GMRBuddy.CONTACT_NUMBER.toString(), GMRBuddy.CONTACT_NAME.toString(), GMRBuddy.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRBuddy.CONTACT_WELCOME_MESSAGE.toString(), GMRBuddy.CONTACT_NUMBER.toString());   
-                        break;            
-                    case "news": 
+                }
+                else if(contactId.equals(GMRBuddy.CONTACT_NUMBER.toString())) {
                         usr.addContact(GMRNews.CONTACT_NUMBER.toString(), GMRNews.CONTACT_NAME.toString(), GMRNews.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRNews.CONTACT_WELCOME_MESSAGE.toString(), GMRNews.CONTACT_NUMBER.toString());   
-                        break;            
-                    case "events": 
+                }
+                else if(contactId.equals(GMREvents.CONTACT_NUMBER.toString())){
                         usr.addContact(GMREvents.CONTACT_NUMBER.toString(), GMREvents.CONTACT_NAME.toString(), GMREvents.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMREvents.CONTACT_WELCOME_MESSAGE.toString(), GMREvents.CONTACT_NUMBER.toString());   
-                        break;            
-                    case "community": 
+                }
+                else if(contactId.equals(GMRCommunity.CONTACT_NUMBER.toString())){
                         usr.addContact(GMRCommunity.CONTACT_NUMBER.toString(), GMRCommunity.CONTACT_NAME.toString(), GMRCommunity.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRCommunity.CONTACT_WELCOME_MESSAGE.toString(), GMRCommunity.CONTACT_NUMBER.toString());   
-                        break;            
-                    case "promo": 
+                }
+                else if(contactId.equals(GMRPromo.CONTACT_NUMBER.toString())){
                         usr.addContact(GMRPromo.CONTACT_NUMBER.toString(), GMRPromo.CONTACT_NAME.toString(), GMRPromo.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRPromo.CONTACT_WELCOME_MESSAGE.toString(), GMRPromo.CONTACT_NUMBER.toString());   
-                        break;
-                    }
+                }
                     break;
             case "remove":
-                log.severe(usr.getAddedContacts());
-                switch(contactId){
-                    case "gmr-buddy": 
+                if(contactId.equals(GMRBuddy.CONTACT_NUMBER.toString())){
                         usr.removeContact(GMRBuddy.CONTACT_NUMBER.toString());
-                        break;            
-                    case "news": 
+                }
+                else if(contactId.equals(GMRNews.CONTACT_NUMBER.toString())){   
                         usr.removeContact(GMRNews.CONTACT_NUMBER.toString());
-                        break;            
-                    case "events": 
+                }
+                else if(contactId.equals(GMREvents.CONTACT_NUMBER.toString())){   
                         usr.removeContact(GMREvents.CONTACT_NUMBER.toString());
-                        break;            
-                    case "community": 
+                }
+                else if(contactId.equals(GMRCommunity.CONTACT_NUMBER.toString())){   
                         usr.removeContact(GMRCommunity.CONTACT_NUMBER.toString());
-                        break;            
-                    case "promo": 
+                }
+                else if(contactId.equals(GMRPromo.CONTACT_NUMBER.toString())){   
                         usr.removeContact(GMRPromo.CONTACT_NUMBER.toString());
-                        break;
+
                 }
 
         }

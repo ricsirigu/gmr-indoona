@@ -19,12 +19,20 @@
   <table class="table table-responsive">
   <img src="https://lh3.googleusercontent.com/-UNNKtV1KTIE/AAAAAAAAAAI/AAAAAAAAERk/t_VWFoLnu6s/s120-c/photo.jpg" alt="GuideMeRight logo" class="img-responsive logo center-block" >
 
+ <%@ page import="com.gmr.indoona.model.User;" %>
+  <%
+    User u = (User)request.getAttribute("user");
+     %>
+            <input type="hidden" id="added-contacts" value=<%= u.getAddedContacts() %>>
+            <input type="hidden" id="user-id" value=<%= u.getUserId() %>>
+       <%
+  %>
 
   <tr>
     <td><img src="/img/gmr-buddy.png" class="gmr-icon"></td>
     <td>GMR Buddy</td>
     <td>
-    <button class="follow btn btn-default" data-contact-id="gmr-buddy" type="button">
+    <button class="follow btn btn-default" data-contact-id="11" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -35,7 +43,7 @@
     <td><img src="/img/gmr-news.png" class="gmr-icon"></td>
     <td >News GMR</td>
     <td >
-    <button class="follow btn btn-default" data-contact-id="news" type="button">
+    <button class="follow btn btn-default" data-contact-id="12" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -46,7 +54,7 @@
     <td><img src="/img/gmr-events.png" class="gmr-icon"></td>
     <td >Eventi</td>
     <td >
-    <button class="follow btn btn-default" data-contact-id="events" type="button">
+    <button class="follow btn btn-default" data-contact-id="13" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -57,7 +65,7 @@
     <td><img src="/img/gmr-community.png" class="gmr-icon"></td>
     <td >Community GMR</td>
     <td >
-    <button class="follow btn btn-default" data-contact-id="community" type="button">
+    <button class="follow btn btn-default" data-contact-id="14" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -68,7 +76,7 @@
     <td><img src="/img/gmr-promo.png" class="gmr-icon"></td>
     <td >Promozioni GMR</td>
     <td >
-    <button class="follow btn btn-default" data-contact-id="promo" type="button">
+    <button class="follow btn btn-default" data-contact-id="15" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
     </button>
@@ -76,9 +84,7 @@
   </tr>
 
 
-  <INPUT TYPE="HIDDEN" NAME="sender" id="user-id" value=<%= request.getParameter("user") %>>
-
-  </table>
+   </table>
 </form>
 
 </body>
@@ -86,6 +92,17 @@
   <SCRIPT LANGUAGE="JavaScript">
 
     $( document ).ready(function() {      
+
+      var c = $("#added-contacts").val();
+      var contactList = JSON.parse(c)
+      contactList.contacts.forEach(function(data, i){        
+        var buttonSelected = $("button[data-contact-id='" + data.contact_id +"']");
+         buttonSelected.addClass("checked");
+         $(buttonSelected.children()[0]).removeClass("glyphicon-plus");
+         $(buttonSelected.children()[0]).addClass("glyphicon-ok");
+         $("span", buttonSelected).text("");
+      })
+
 
       $(".follow").click(function(){
       
