@@ -19,11 +19,11 @@
   <table class="table table-responsive">
   <img src="https://lh3.googleusercontent.com/-UNNKtV1KTIE/AAAAAAAAAAI/AAAAAAAAERk/t_VWFoLnu6s/s120-c/photo.jpg" alt="GuideMeRight logo" class="img-responsive logo center-block" >
 
-  <h4 class="title text-center"> Seleziona il canale che vuoi seguire:</h4>
 
   <tr>
-    <td >GMR Buddy</td>
-    <td >
+    <td><img src="/img/gmr-buddy.png" class="gmr-icon"></td>
+    <td>GMR Buddy</td>
+    <td>
     <button class="follow btn btn-default" data-contact-id="gmr-buddy" type="button">
       <i class="glyphicon glyphicon-plus"></i>
       <span>Segui</span>
@@ -32,6 +32,7 @@
   </tr>
 
   <tr>
+    <td><img src="/img/gmr-news.png" class="gmr-icon"></td>
     <td >News GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="news" type="button">
@@ -42,6 +43,7 @@
   </tr>
 
   <tr>
+    <td><img src="/img/gmr-events.png" class="gmr-icon"></td>
     <td >Eventi</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="events" type="button">
@@ -52,6 +54,7 @@
   </tr>
 
   <tr>
+    <td><img src="/img/gmr-community.png" class="gmr-icon"></td>
     <td >Community GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="community" type="button">
@@ -62,6 +65,7 @@
   </tr>
 
   <tr>
+    <td><img src="/img/gmr-promo.png" class="gmr-icon"></td>
     <td >Promozioni GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="promo" type="button">

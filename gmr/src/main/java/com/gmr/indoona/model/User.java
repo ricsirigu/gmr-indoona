@@ -152,31 +152,8 @@ public class User {
     }
 
 
-    public void addChannel() {
 
-        try{
-           //create a contact for the user
-            List<String> caps = new ArrayList();
-            caps.add("group_add");
-            caps.add("interactive");
-
-            Contact gmrChannel = new Contact(
-                    Config.roomNumber,
-                    Config.roomName,
-                    Config.roomImg,
-                    caps);
-            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
-            ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    public void addChannel (String code, String name) {
+    public void addContact (String contactNumber, String contactName) {
 
         try{
             //create a contact for the user
@@ -185,8 +162,8 @@ public class User {
             caps.add("interactive");
 
             Contact gmrChannel = new Contact(
-                    code,
-                    name,
+                    contactNumber,
+                    contactName,
                     Config.roomImg,
                     caps);
             UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
@@ -199,8 +176,19 @@ public class User {
 
     }
 
+    public void removeContact(String contactNumber){
+        try{
 
-    public  void sendMessage ( String message) {
+            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
+            ProviderLocator.getInstance().getApiProvider().invokeContactRemoveApi(uat, contactNumber);
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public  void sendMessage(String message) {
 
 
         try{
@@ -234,7 +222,6 @@ public class User {
     }
 
     public  void sendMessage (String message, String room) {
-
 
         try{
             UserAccessToken uat =  UserAccessToken.fromJson(this.getJsonUserAccessToken());

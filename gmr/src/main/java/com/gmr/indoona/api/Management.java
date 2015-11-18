@@ -1,21 +1,21 @@
 package com.gmr.indoona.api;
 
+import com.gmr.indoona.model.*;
+import static com.gmr.indoona.model.GMRContact.*;
+import com.google.appengine.repackaged.org.joda.time.DateTime;
+import com.googlecode.objectify.ObjectifyService;
+import com.indoona.openplatform.sdk.provider.ProviderLocator;
+import com.indoona.openplatform.sdk.model.AppAccessToken;
+import com.indoona.openplatform.sdk.utils.TextUtils.*;
+import net.sf.json.JSONObject;
 
- import com.gmr.indoona.model.Conversation;
- import com.gmr.indoona.model.User;
- import com.google.appengine.repackaged.org.joda.time.DateTime;
- import com.googlecode.objectify.ObjectifyService;
- import com.indoona.openplatform.sdk.provider.ProviderLocator;
- import com.indoona.openplatform.sdk.model.AppAccessToken;
- import com.indoona.openplatform.sdk.utils.TextUtils.*;
- import net.sf.json.JSONObject;
-
- import javax.servlet.ServletException;
- import javax.servlet.http.HttpServlet;
- import javax.servlet.http.HttpServletRequest;
- import javax.servlet.http.HttpServletResponse;
- import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.logging.Logger;
+
 
 public class Management extends HttpServlet {
     User usr = null;
@@ -65,34 +65,58 @@ public class Management extends HttpServlet {
 
         String userId = req.getParameter("userId");
 
-        log.info("User " + userId + " " + action + " " + contactId );
+        log.severe("User " + userId + " " + action + " " + contactId );
 
         User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", userId).first().now();
 
-        usr.addChannel(contactId, contactId);
+        switch(action){
+            case "add":
+                switch(contactId){
+                    case "gmr-buddy": 
+                        usr.addContact(GMRBuddy.CONTACT_NUMBER.toString(), contactId);
+                        usr.sendMessage(GMRBuddy.CONTACT_NAME.toString(), GMRBuddy.CONTACT_NUMBER.toString());   
+                        break;            
+                    case "news": 
+                        usr.addContact(GMRNews.CONTACT_NUMBER.toString(), contactId);
+                        usr.sendMessage(GMRNews.CONTACT_NAME.toString(), GMRNews.CONTACT_NUMBER.toString());   
+                        break;            
+                    case "events": 
+                        usr.addContact(GMREvents.CONTACT_NUMBER.toString(), contactId);
+                        usr.sendMessage(GMREvents.CONTACT_NAME.toString(), GMREvents.CONTACT_NUMBER.toString());   
+                        break;            
+                    case "community": 
+                        usr.addContact(GMRCommunity.CONTACT_NUMBER.toString(), contactId);
+                        usr.sendMessage(GMRCommunity.CONTACT_NAME.toString(), GMRCommunity.CONTACT_NUMBER.toString());   
+                        break;            
+                    case "promo": 
+                        usr.addContact(GMRPromo.CONTACT_NUMBER.toString(), contactId);
+                        usr.sendMessage(GMRPromo.CONTACT_NAME.toString(), GMRPromo.CONTACT_NUMBER.toString());   
+                        break;
+                    }
+                    break;
+            case "remove":
+                switch(contactId){
+                    case "gmr-buddy": 
+                        usr.removeContact(GMRBuddy.CONTACT_NUMBER.toString());
+                        break;            
+                    case "news": 
+                        usr.removeContact(GMRNews.CONTACT_NUMBER.toString());
+                        break;            
+                    case "events": 
+                        usr.removeContact(GMREvents.CONTACT_NUMBER.toString());
+                        break;            
+                    case "community": 
+                        usr.removeContact(GMRCommunity.CONTACT_NUMBER.toString());
+                        break;            
+                    case "promo": 
+                        usr.removeContact(GMRPromo.CONTACT_NUMBER.toString());
+                        break;
+                }
 
-        switch(contactId){
-            case "gmr-buddy": 
-                usr.sendMessage("GMR Buddy", contactId);   
-                break;            
-            case "news": 
-                usr.sendMessage("GMR News", contactId);   
-                break;            
-            case "events": 
-                usr.sendMessage("GMR Events", contactId);   
-                break;            
-            case "community": 
-                usr.sendMessage("GMR Community", contactId);   
-                break;            
-            case "promo": 
-                usr.sendMessage("GMR Promo", contactId);   
-                break;
         }
 
+
+    }   
     
-        //resp.sendRedirect("/management.jsp?user="+usr.getUserId());
-
-
-    }
 
 }

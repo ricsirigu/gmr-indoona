@@ -38,17 +38,12 @@ public class Redirect extends HttpServlet {
         // getting user info and storing
         User usr = User.createUser(code);
 
-        //add channel to user and sending message
-        usr.addChannel();
-
-        //send welcome message to User
-        usr.sendMessage(Config.roomFirstMessage);   
 
         response.sendRedirect("/management.jsp");
 
     }
 
-    
+
 
 }
 
