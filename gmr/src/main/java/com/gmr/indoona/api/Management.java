@@ -81,7 +81,7 @@ public class Management extends HttpServlet {
                         usr.addContact(GMRBuddy.CONTACT_NUMBER.toString(), GMRBuddy.CONTACT_NAME.toString(), GMRBuddy.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRBuddy.CONTACT_WELCOME_MESSAGE.toString(), GMRBuddy.CONTACT_NUMBER.toString());   
                 }
-                else if(contactId.equals(GMRBuddy.CONTACT_NUMBER.toString())) {
+                else if(contactId.equals(GMRNews.CONTACT_NUMBER.toString())) {
                         usr.addContact(GMRNews.CONTACT_NUMBER.toString(), GMRNews.CONTACT_NAME.toString(), GMRNews.CONTACT_IMAGE_URL.toString());
                         usr.sendMessage(GMRNews.CONTACT_WELCOME_MESSAGE.toString(), GMRNews.CONTACT_NUMBER.toString());   
                 }
