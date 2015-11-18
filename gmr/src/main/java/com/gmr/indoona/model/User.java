@@ -59,26 +59,33 @@ public class User {
 
     public static User createUser (String code){
 
-        UserAccessToken token = null;
-        User usr = new User();
-        try {
+       UserAccessToken token = null;
+       User usr = new User();
 
-            token = ProviderLocator.getInstance()
-                .getAuthorizationProvider()
-                .getUserAccessToken(code);
+       try {
 
-            ConnectedUser cusr = ConnectedUser.fromJson(ProviderLocator.getInstance().getApiProvider().invokeMeApi(token));
-            usr = new User(token.getUserId(), token.getToken(), token.getRefreshToken(), token.toJson(), cusr.getName(), cusr.getSurname(), cusr.getMsisdn());
-            ObjectifyService.ofy().save().entity(usr).now();
+           token = ProviderLocator.getInstance()
+               .getAuthorizationProvider()
+               .getUserAccessToken(code);
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+           ConnectedUser cusr = ConnectedUser.fromJson(ProviderLocator.getInstance().getApiProvider().invokeMeApi(token));
 
-        return usr;
+           if(ObjectifyService.ofy().load().type(User.class).filter("userId", cusr.getUserId()).first().now() == null) {
 
-    }
+               usr = new User(token.getUserId(), token.getToken(), token.getRefreshToken(), token.toJson(), cusr.getName(), cusr.getSurname(), cusr.getMsisdn());
+               ObjectifyService.ofy().save().entity(usr).now();
+
+           }
+           else {
+            usr = ObjectifyService.ofy().load().type(User.class).filter("userId", cusr.getUserId()).first().now();
+          }
+
+       }
+       catch (Exception e) {e.printStackTrace();}
+
+       return usr;
+
+   }
 
     public String getUserId(){
         return userId;
