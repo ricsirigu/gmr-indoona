@@ -240,7 +240,6 @@ public class User {
 
     public String buildResponse(String usertext){
         String response = "Hi my friend!";
-        //TODO: 1) get eventa results 2) show them 3) interpret query
 
         JSONObject jsonobj = JSONObject.fromObject(Semantic.extractSemantic(usertext));
         String date = jsonobj.getJSONObject("when").getString("date");
@@ -278,7 +277,7 @@ public class User {
             else {
                    date =  fmt.print(DateTime.parse(date));
             }
-            response =  "Hey, "+ msg + " ---> " + GMR.getActivities(lat, lon, date);
+            response =  "Ciao, "+ msg + ":\n" + GMR.getActivities(lat, lon, date);
 
         }
         else {
@@ -292,7 +291,7 @@ public class User {
             this.setLat(lat);
             this.setLon(lon);
             ObjectifyService.ofy().save().entity(this).now();
-            response = "Hey, "+ msg+ " ---> " + GMR.getActivities(lat, lon, date);
+            response = "Ciao, "+ msg+ ":" + GMR.getActivities(lat, lon, date);
 
         }
 

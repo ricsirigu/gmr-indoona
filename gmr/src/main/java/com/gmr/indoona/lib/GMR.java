@@ -44,7 +44,7 @@ public class GMR {
                 String title = jsobj.getString("name");
                 String link = GmrURI + "activity/" + jsobj.getString("seoUrlIT");
 
-                response = response + title + " - " + link + "\n";
+                response = response + "\n" + title + "\n" + link + "\n";
             }
 
         } catch (MalformedURLException e) {

@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
   <link href="/css/management.css" rel="stylesheet" >
   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -21,7 +21,7 @@
 
  <%@ page import="com.gmr.indoona.model.User;" %>
   <%
-    User u = (User)request.getAttribute("user");
+      User u = (User)request.getAttribute("user");
      %>
             <input type="hidden" id="added-contacts" value=<%= u.getAddedContacts() %>>
             <input type="hidden" id="user-id" value=<%= u.getUserId() %>>
@@ -30,55 +30,55 @@
 
   <tr>
     <td><img src="/img/gmr-buddy.png" class="gmr-icon"></td>
-    <td>GMR Buddy</td>
+    <td class="contact-name">GMR Buddy</td>
     <td>
     <button class="follow btn btn-default" data-contact-id="11" type="button">
       <i class="glyphicon glyphicon-plus"></i>
-      <span>Segui</span>
+      <span class="follow">Segui</span>
     </button>
   </td>
   </tr>
 
   <tr>
     <td><img src="/img/gmr-news.png" class="gmr-icon"></td>
-    <td >News GMR</td>
+    <td class="contact-name">News GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="12" type="button">
       <i class="glyphicon glyphicon-plus"></i>
-      <span>Segui</span>
+      <span class="follow">Segui</span>
     </button>
   </td>
   </tr>
 
   <tr>
     <td><img src="/img/gmr-events.png" class="gmr-icon"></td>
-    <td >Eventi</td>
+    <td class="contact-name">Eventi GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="13" type="button">
       <i class="glyphicon glyphicon-plus"></i>
-      <span>Segui</span>
+      <span class="follow">Segui</span>
     </button>
   </td>
   </tr>
 
   <tr>
     <td><img src="/img/gmr-community.png" class="gmr-icon"></td>
-    <td >Community GMR</td>
+    <td class="contact-name">Community GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="14" type="button">
       <i class="glyphicon glyphicon-plus"></i>
-      <span>Segui</span>
+      <span class="follow">Segui</span>
     </button>
   </td>
   </tr>
 
   <tr>
     <td><img src="/img/gmr-promo.png" class="gmr-icon"></td>
-    <td >Promozioni GMR</td>
+    <td class="contact-name">Promozioni GMR</td>
     <td >
     <button class="follow btn btn-default" data-contact-id="15" type="button">
       <i class="glyphicon glyphicon-plus"></i>
-      <span>Segui</span>
+      <span class="follow">Segui</span>
     </button>
   </td>
   </tr>
