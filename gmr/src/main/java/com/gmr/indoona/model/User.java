@@ -16,17 +16,17 @@ import com.googlecode.objectify.annotation.Cache;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.indoona.openplatform.sdk.model.ConnectedUser;
-import com.indoona.openplatform.sdk.model.Contact;
-import com.indoona.openplatform.sdk.model.UserAccessToken;
-import com.indoona.openplatform.sdk.model.message.Message;
-import com.indoona.openplatform.sdk.model.message.MessageFactory;
+import com.indoona.openplatform.sdk.model.*;
+import com.indoona.openplatform.sdk.model.message.*;
 import com.indoona.openplatform.sdk.provider.ProviderLocator;
 import net.sf.json.JSONObject;
 
 
 @Entity
 public class User {
+
+    private static final Logger log = Logger.getLogger(User.class.getName());
+
     @Id Long id;
     @Index String userId;
     @Index String token;
@@ -172,8 +172,12 @@ public class User {
                     contactName,
                     imageUrl,
                     caps);
-            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
-            ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(uat, gmrChannel);
+                       
+            AppAccessToken appToken = ProviderLocator.getInstance()
+                    .getAuthorizationProvider()
+                    .getAppAccessToken();
+
+            ProviderLocator.getInstance().getApiProvider().invokeContactAddApi(appToken, this.getUserId(), gmrChannel);
 
         }
         catch (Exception e) {
@@ -185,8 +189,11 @@ public class User {
     public void removeContact(String contactNumber){
         try{
 
-            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
-            ProviderLocator.getInstance().getApiProvider().invokeContactRemoveApi(uat, contactNumber);
+            AppAccessToken appToken = ProviderLocator.getInstance()
+                    .getAuthorizationProvider()
+                    .getAppAccessToken();
+
+            ProviderLocator.getInstance().getApiProvider().invokeContactRemoveApi(appToken, this.getUserId(), contactNumber);
         }
         catch(Exception e){
             e.printStackTrace();
@@ -197,8 +204,11 @@ public class User {
     
         String contacts = null;    
          try{
-            UserAccessToken uat = UserAccessToken.fromJson(this.getJsonUserAccessToken());
-            contacts =  ProviderLocator.getInstance().getApiProvider().invokeContactListApi(uat);
+            AppAccessToken appToken = ProviderLocator.getInstance()
+                    .getAuthorizationProvider()
+                    .getAppAccessToken();
+
+            contacts =  ProviderLocator.getInstance().getApiProvider().invokeContactListApi(appToken, this.getUserId());
         }
         catch(Exception e){
             e.printStackTrace();
@@ -208,24 +218,18 @@ public class User {
 
     public  void sendMessage (String message, String room) {
 
-        try{
-            UserAccessToken uat =  UserAccessToken.fromJson(this.getJsonUserAccessToken());
-               if(uat.isExpired()) {
-                   UserAccessToken newUat = ProviderLocator.getInstance()
-                            .getAuthorizationProvider()
-                            .refreshUserAccessToken(uat);
+        try{    
 
-                    User usr = ObjectifyService.ofy().load().type(User.class).filter("token", uat).first().now();
-                    usr.setJsonUserAccessToken(newUat.toJson());
-                    usr.setToken(newUat.getToken());
-                    ObjectifyService.ofy().save().entity(usr).now();
+            AppAccessToken appToken = ProviderLocator.getInstance()
+                    .getAuthorizationProvider()
+                    .getAppAccessToken();
 
-            }
-
+            
             //send a welcome message to the user
             String sentMsgStr = ProviderLocator.getInstance()
                     .getApiProvider().invokeTextMessageSendApi(
-                            uat,
+                            appToken,
+                            this.getUserId(),
                             room,
                             this.getUserId(),
                             message,
@@ -233,6 +237,7 @@ public class User {
             Message sentMsg = MessageFactory.getInstance().buildMessage(sentMsgStr);
         }
         catch (Exception e) {
+            log.severe("Exception " + e.toString());
             e.printStackTrace();
         }
 

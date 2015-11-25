@@ -57,9 +57,11 @@ public class IndoonaServlet extends HttpServlet {
        //parsing just the sender and user txt 
       //TODO check for message type
       String roomId = MessageFactory.getInstance().buildMessage(data).getRecipient().split("@")[0];
+
       TextMessage receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
-       
+      
       String sender = receivedMsg.getSender();
+
       String userText = receivedMsg.getText();
 
       String[] parts = sender.split("@");
