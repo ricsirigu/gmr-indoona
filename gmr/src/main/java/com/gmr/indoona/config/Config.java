@@ -6,10 +6,11 @@ import com.indoona.openplatform.sdk.provider.*;
 
 import java.util.*;
 import java.lang.*;
-
-
+import java.util.logging.Logger;
 
 public class Config  {
+
+    private static final Logger log = Logger.getLogger(Config.class.getName());
 
 	//app settings
 	public static String redirect= "*"; 
@@ -35,7 +36,8 @@ public class Config  {
 				new MD5SignatureProvider());
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+			log.severe(e.toString());
+            e.printStackTrace();
 		}
 	}
 }

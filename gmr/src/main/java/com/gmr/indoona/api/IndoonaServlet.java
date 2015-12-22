@@ -38,7 +38,8 @@ public class IndoonaServlet extends HttpServlet {
     } 
 
     catch (Exception e) {
-      e.printStackTrace();
+        log.severe(e.toString());
+        e.printStackTrace();
     }
 
   }
@@ -85,7 +86,8 @@ public class IndoonaServlet extends HttpServlet {
     } 
 
     catch (Exception e) {
-      e.printStackTrace();
+        log.severe(e.toString());
+        e.printStackTrace();
     }
 
     }

@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by andreazanda on 11/11/15.
@@ -16,6 +17,7 @@ import java.util.Random;
 public class GMR {
 
     private final static String GmrURI = "https://www.guidemeright.com/";
+    private static final Logger log = Logger.getLogger(GMR.class.getName());
 
     public static String getActivities(String lat, String lon, String date) {
 
@@ -47,10 +49,14 @@ public class GMR {
                 response = response + "\n" + title + "\n" + link + "\n";
             }
 
-        } catch (MalformedURLException e) {
-            // ...
-        } catch (IOException e) {
-            // ...
+        } 
+        catch (MalformedURLException e) {
+            log.severe(e.toString());
+            e.printStackTrace();
+        } 
+        catch (IOException e) {
+            log.severe(e.toString());
+            e.printStackTrace();
         }
 
         return response;

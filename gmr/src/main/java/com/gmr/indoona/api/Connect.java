@@ -48,6 +48,7 @@ public class Connect extends HttpServlet {
             response.sendRedirect(url);
 
         }  catch (Exception e) {
+                log.severe(e.toString());
                 e.printStackTrace();
             }
     }

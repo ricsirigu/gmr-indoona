@@ -81,7 +81,10 @@ public class User {
           }
 
        }
-       catch (Exception e) {e.printStackTrace();}
+       catch (Exception e) {
+            log.severe(e.toString());
+            e.printStackTrace();
+       }
 
        return usr;
 
@@ -181,6 +184,7 @@ public class User {
 
         }
         catch (Exception e) {
+            log.severe(e.toString());
             e.printStackTrace();
         }
 
@@ -196,6 +200,7 @@ public class User {
             ProviderLocator.getInstance().getApiProvider().invokeContactRemoveApi(appToken, this.getUserId(), contactNumber);
         }
         catch(Exception e){
+            log.severe(e.toString());
             e.printStackTrace();
         }
     }
@@ -211,6 +216,7 @@ public class User {
             contacts =  ProviderLocator.getInstance().getApiProvider().invokeContactListApi(appToken, this.getUserId());
         }
         catch(Exception e){
+            log.severe(e.toString());
             e.printStackTrace();
         }
         return contacts;

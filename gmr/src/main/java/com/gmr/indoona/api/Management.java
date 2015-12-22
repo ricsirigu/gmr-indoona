@@ -28,21 +28,21 @@ public class Management extends HttpServlet {
 
         try {
             ProviderLocator locator = ProviderLocator.getInstance();
-
+          
             String otp = request.getParameter("otp");
 
             AppAccessToken appToken = locator
                     .getAuthorizationProvider()
                     .getAppAccessToken();
+           
             String jsonResult = locator.getApiProvider()
                     .invokeOtpVerifyApi(appToken, otp);
+           
             String userId = JSONObject.fromObject(jsonResult).getString("user_id");
 
             log.severe("Management user id is " + userId );
 
-
             usr = ObjectifyService.ofy().load().type(User.class).filter("userId", userId).first().now();
-
 
             ServletContext sc = getServletContext();
             RequestDispatcher rd = sc.getRequestDispatcher("/management.jsp");
@@ -54,6 +54,7 @@ public class Management extends HttpServlet {
             // if yes, provide the management page’s content,
             // otherwise you should raise an error
         }catch (Exception e) {
+            log.severe(e.toString());
             e.printStackTrace();
         }
 

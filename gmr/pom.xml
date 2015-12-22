@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.indoona.openplatform</groupId>
             <artifactId>indoona-java-sdk</artifactId>
-            <version>0.9.0</version>
+            <version>0.9.4</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.geocoder-java</groupId>
