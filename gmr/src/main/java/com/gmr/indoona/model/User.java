@@ -265,48 +265,20 @@ public class User {
             msg =  "esperienze vicino a " + msg.split(" ")[3];
         }
 
-
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/yyyy");
-
-        if(Semantic.containsKeywords(usertext) != "none") {
-
+        if(Semantic.containsKeywords(usertext) != "none"){
             response = Semantic.containsKeywords(usertext);
-
         }
-        else if(lat=="null" && (getLat() == "0.0" || getLat() == null)) {
-
-            response = "Hey, non ho capito il luogo, potresti specificarlo?";
-
-
-        } else if (lat=="null" && getLat() != "0.0" ){
-            lat= this.getLat();
-            lon = this.getLon();
-            ObjectifyService.ofy().save().entity(this).now();
-
-            if (date == "null") {
-                 date = fmt.print(DateTime.now());}
-            else {
-                   date =  fmt.print(DateTime.parse(date));
-            }
-            response =  "Ciao, "+ msg + ":\n" + GMR.getActivities(lat, lon, date);
-
-        }
+        else if(lat == "null" || lon == "null") {
+            response = "Non ho capito il luogo, potresti ripeterlo?";
+        } 
         else {
-
-            if (date == "null") {
-                date = fmt.print(DateTime.now());}
-            else {
-                date =  fmt.print(DateTime.parse(date));
-            }
-            System.out.println(date);
             this.setLat(lat);
             this.setLon(lon);
             ObjectifyService.ofy().save().entity(this).now();
             response = "Ciao, "+ msg+ ":" + GMR.getActivities(lat, lon, date);
-
         }
 
-        return (response);
+        return response;
     }
 
 

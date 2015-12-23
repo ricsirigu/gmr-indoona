@@ -6,11 +6,17 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.logging.Logger;
+
 
 /**
  * Created by andreazanda on 11/11/15.
+ * Edited By Riccardo Sirigu
  */
 public class Semantic {
+
+    private static final Logger log = Logger.getLogger(Semantic.class.getName());
+
 
     public static String extractSemantic(String usertext) {
 
@@ -29,9 +35,9 @@ public class Semantic {
 
 
         } catch (MalformedURLException e) {
-            // ...
+            log.severe(e.toString());
         } catch (IOException e) {
-            // ...
+            log.severe(e.toString());
         }
 
         return jsonTxt;

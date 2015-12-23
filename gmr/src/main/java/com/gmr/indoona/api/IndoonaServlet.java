@@ -18,6 +18,7 @@ import com.indoona.openplatform.sdk.model.message.*;
 import com.indoona.openplatform.sdk.model.UserAccessToken;
 import static com.gmr.indoona.model.GMRContact.*;
 import  com.gmr.indoona.model.User;
+import com.gmr.indoona.lib.GMR;
 import com.gmr.indoona.config.Config;
 import java.util.logging.Logger;
 
@@ -34,7 +35,7 @@ public class IndoonaServlet extends HttpServlet {
 
        //testing the rest service
        resp.setContentType("text/plain");
-       resp.getWriter().println("testing rest: ok");
+       resp.getWriter().println("I'm ready to serve you, master.");
     } 
 
     catch (Exception e) {
@@ -57,26 +58,35 @@ public class IndoonaServlet extends HttpServlet {
 
        //parsing just the sender and user txt 
       //TODO check for message type
-      String roomId = MessageFactory.getInstance().buildMessage(data).getRecipient().split("@")[0];
+      Message msg = MessageFactory.getInstance().buildMessage(data);
 
-      TextMessage receivedMsg = (TextMessage) MessageFactory.getInstance().buildMessage(data);
-      
-      String sender = receivedMsg.getSender();
+      String roomId = msg.getRecipient().split("@")[0];
 
-      String userText = receivedMsg.getText();
+      String sender = msg.getSender().split("@")[0];
 
-      String[] parts = sender.split("@");
-      sender = parts[0];
+      String userText = "";
       
       //retrieving the user from persistence
+      //TODO Handling user not found
       User usr = ObjectifyService.ofy().load().type(User.class).filter("userId", sender).first().now();
 
-      //TODO Handling user not found
+      String userResponse = "";
 
-      //sending message
-      String userResponse = usr.buildResponse(userText);
+      if (msg.getType() == Message.MessageType.TEXT){
+          userText = ((TextMessage) msg).getText();
+          userResponse = usr.buildResponse(userText);
+      }
+      else if (msg.getType() == Message.MessageType.LOCATION) {
+          Double lat = ((LocationMessage) msg).getLatitude();
+          Double lon = ((LocationMessage) msg).getLongitude();
+          userResponse = GMR.getActivities(lat.toString(), lon.toString(), "");
+          userText = "position";
+      } 
+      else {
+          userResponse = "Puoi scrivere o inviarmi una posizione?";
+      }
         
-      log.severe("Message " + receivedMsg.getText() + " room " + roomId );
+      log.severe("Message " + userText + " room " + roomId );
 
       //sending message
       if(roomId.equals(GMRBuddy.CONTACT_NUMBER.toString())){

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 /**
  * Created by andreazanda on 11/11/15.
+ * Edited By Riccardo Sirigu
  */
 public class GMR {
 
